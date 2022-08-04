@@ -8,7 +8,7 @@ from pydantic import BaseModel, EmailStr
 from pydantic import Field
 
 #FastAPI
-from fastapi import Cookie, FastAPI, Form, Header
+from fastapi import Cookie, FastAPI, File, Form, Header, UploadFile
 from fastapi import status
 from fastapi import Body, Query, Path
 
@@ -197,4 +197,15 @@ def contac(
     ads:Optional[str] = Cookie(default=None)
 ):
     return user_agent
-    
+
+# FIle
+
+@app.post("/post-image")
+def post_image(
+    image: UploadFile = File(...)
+):
+    return {
+        "Filename": image.filename,
+        "Format": image.content_type,
+        "Size(kb)": round(len(image.file.read()) / 1024, ndigits=2)
+    }
