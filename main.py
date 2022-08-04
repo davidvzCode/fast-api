@@ -8,9 +8,9 @@ from pydantic import BaseModel, EmailStr
 from pydantic import Field
 
 #FastAPI
-from fastapi import Cookie, FastAPI, File, Form, Header, UploadFile
-from fastapi import status
-from fastapi import Body, Query, Path
+from fastapi import FastAPI, UploadFile
+from fastapi import status, HTTPException
+from fastapi import Body, Query, Path, Cookie, File, Header, Form  
 
 app = FastAPI()
 
@@ -132,14 +132,21 @@ def show_person(
 
 # Validations Path
 
+person = [1, 2, 3, 4, 5]
+
 @app.get("/person/detail/{person_id}")
 def show_person(
     person_id: int = Path(
         ...,
         gt=0,
         example = 126
-        )
+    )
 ):
+    if person_id not in person:
+        raise HTTPException(
+            status_code= status.HTTP_404_NOT_FOUND,
+            detail = "This person doesn't exist"
+        ) 
     return {person_id: "It exists"}
 
 
