@@ -102,7 +102,8 @@ def home():
 @app.post(
     "/person/new",
     response_model = PersonOut,
-    status_code = status.HTTP_201_CREATED
+    status_code = status.HTTP_201_CREATED,
+    tags = ["Person"]
     )
 def create_person(person:Person = Body(...)):
     return person
@@ -110,7 +111,7 @@ def create_person(person:Person = Body(...)):
 
 # Validations: QueryParameters
 
-@app.get("/person/detail", status_code = status.HTTP_200_OK)
+@app.get("/person/detail", status_code = status.HTTP_200_OK, tags = ["Person"])
 def show_person(
     name: Optional[str] = Query(
         None,
@@ -134,7 +135,7 @@ def show_person(
 
 person = [1, 2, 3, 4, 5]
 
-@app.get("/person/detail/{person_id}")
+@app.get("/person/detail/{person_id}", tags = ["Person"])
 def show_person(
     person_id: int = Path(
         ...,
@@ -152,7 +153,7 @@ def show_person(
 
 # Validations: Request Body
 
-@app.put("/person/{person_id}")
+@app.put("/person/{person_id}", tags = ["Person"])
 def update_person(
     person_id: int = Path(
         ...,
@@ -173,7 +174,8 @@ def update_person(
 @app.post(
     "/login",
     response_model=LoginOut,
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    tags = ["Person"]
 )
 def login(username:str = Form(...), password:str = Form(...)):
     return LoginOut(username=username)
