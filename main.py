@@ -103,10 +103,22 @@ def home():
     "/person/new",
     response_model = PersonOut,
     status_code = status.HTTP_201_CREATED,
-    tags = ["Person"]
+    tags = ["Person"],
+    summary = "Create person in the app"
     )
 def create_person(person:Person = Body(...)):
+    """
+    Create a new person
+
+    Tis path operation creates a person in the app save the information in the database
+    
+    Parameters:
+    - Request body parameters
+        - **person: Person** -> A person model first name, last name, age, hair color and marital status
+    Returns a person model with first name, last name, age, hair color
+    """
     return person
+    
 
 
 # Validations: QueryParameters
