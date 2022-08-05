@@ -123,7 +123,12 @@ def create_person(person:Person = Body(...)):
 
 # Validations: QueryParameters
 
-@app.get("/person/detail", status_code = status.HTTP_200_OK, tags = ["Person"])
+@app.get(
+    "/person/detail",
+    status_code = status.HTTP_200_OK,
+    tags = ["Person"],
+    deprecated = True
+)
 def show_person(
     name: Optional[str] = Query(
         None,
